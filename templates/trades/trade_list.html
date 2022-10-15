@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<table>
+    <thead>
+        <tr>
+            <th>Ticker</th>
+            <th>Company</th>
+            <th>Currency</th>
+            <th>Qty</th>
+            <th>Date</th>
+            <th>Orig Price</th>
+            <th>Orig Value</th>
+            <th>New Price</th>
+            <th>New Value</th>
+            <th>Gain / Loss</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for trade in object_list %}
+        <tr>
+            <td>{{ trade.ticker }}</td>
+            <td>{{ trade.company_name }}</td>
+            <td>{{ trade.share_currency }}</td>
+            <td>{{ trade.quantity }}</td>
+            <td>{{ trade.purchase_date }}</td>
+            <td>{{ trade.initial_share_price }}</td>
+            <td>{{ trade.initial_share_value }}</td>
+            <td>{{ trade.latest_share_price }}</td>
+            <td>{{ trade.latest_share_value }}</td>
+            <td>{{ trade.latest_gain_loss }} </td>
+
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock content %}
