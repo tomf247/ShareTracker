@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<br>
+        <h6>Deleting a Trade</h6>
+        <hr>
+            <p>Confirm Delete?</p>
+            <div><strong>{{ trade.quantity }} shares of {{ trade.ticker }} - {{ trade.company_name }}</strong></div>
+        <hr>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="submit" value="Delete">
+            <a href="{% url 'viewtrades' %}">Cancel</a>
+        </form>
+    <br><hr><br>
+    <span>If you proceed, this trade will be permenantly deleted.</span>
+</div>
+{% endblock content %}

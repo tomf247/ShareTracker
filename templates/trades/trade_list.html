@@ -18,6 +18,7 @@
             <th>New Price</th>
             <th>New Value</th>
             <th>Gain / Loss</th>
+            <th>Actions</th>
         </tr>
     </thead>
 
@@ -34,7 +35,8 @@
             <td>{{ trade.latest_share_price }}</td>
             <td>{{ trade.latest_share_value }}</td>
             <td>{{ trade.latest_gain_loss }} </td>
-
+            <td><a href="{% url 'updatetrade' pk=trade.id %}"> Update</a></td>
+            <td><a href="{% url 'deletetrade' pk=trade.id %}"> Delete</a></td>
         </tr>
         {% endfor %}
     </tbody>
