@@ -10,11 +10,21 @@
 <body>
     {% block content %}{% endblock content %}
     {% if user.is_authenticated %}
-        <p><a href="{% url 'account_logout' %}">Logout {{ user.username }}</a></p>
+    <p><a href="{% url 'account_logout' %}">Logout {{ user.username }}</a></p>
     {% else %}
-        <p><a href="{% url 'account_signup' %}">Sign Up</a></p>
-        <p><a href="{% url 'account_login' %}">Login</a></p>
+    <p><a href="{% url 'account_signup' %}">Sign Up</a></p>
+    <p><a href="{% url 'account_login' %}">Login</a></p>
     </li>
+    {% endif %}
+
+    {% if messages %}
+
+    {% for message in messages %}
+
+        <p>{{ message|safe }}</p>
+    
+    {% endfor %}
+
     {% endif %}
 </body>
 

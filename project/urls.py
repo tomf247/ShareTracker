@@ -7,4 +7,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
     path('', views.ViewTrades.as_view(), name="viewtrades"),
+    path('createtrade/', views.CreateTrade.as_view(), name="createtrade"),
 ]
