@@ -1,10 +1,14 @@
 from trades.models import Trade
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from trades.forms import TradeForm
 from django.http import HttpResponseRedirect, Http404
 from django.urls import reverse_lazy
 from django.contrib import messages
+from django.db.models import Sum
+from django.db import models
+from decimal import Decimal
+
 
 class ViewTrades (LoginRequiredMixin, ListView):
     ''' Display a list of all trades in the user's portfolio. '''
@@ -16,6 +20,11 @@ class ViewTrades (LoginRequiredMixin, ListView):
 
         return Trade.objects.filter(user=self.request.user)
 
+    def get_context_data(self, *args, **kwargs):
+
+        context = super(ViewTrades, self).get_context_data(*args, **kwargs)
+        context['opening_balance'] = Trade.objects.filter(user=self.request.user).aggregate(Sum('initial_share_value'))
+        return context
 
 class CreateTrade(CreateView):
     ''' Record a new trade. '''
@@ -36,7 +45,6 @@ class CreateTrade(CreateView):
 
         messages.success(self.request, 'Trade created successfully.')
         return reverse_lazy('viewtrades')
-
 
 class UpdateTrade(UpdateView):
     ''' Make changes to a previously inserted trade. '''
@@ -64,7 +72,6 @@ class UpdateTrade(UpdateView):
 
         messages.success(self.request, 'Trade updated successfully.')
         return reverse_lazy('viewtrades')
-
 
 class DeleteTrade(DeleteView):
     ''' Remove a trade from user's portfolio. '''
