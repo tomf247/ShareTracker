@@ -23,6 +23,7 @@ class Trade(models.Model):
 
     @property
     def latest_share_price(self):
+        ''' API call to Yahoo Finance for latest price. '''
 
         handle = si.get_quote_data(str(self.ticker))
         latest_share_price = handle.get('regularMarketPrice')
@@ -40,6 +41,7 @@ class Trade(models.Model):
         return Decimal(self.latest_share_value) - self.initial_share_value
 
     def save(self, *args, **kwargs):
+        ''' Override default Save method to populate calculated fields. '''
 
         self.initial_share_value = self.initial_share_price * self.quantity
         handle = si.get_quote_data(str(self.ticker))

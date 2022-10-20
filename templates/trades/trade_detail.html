@@ -1,0 +1,27 @@
+{% extends 'trades/base.html' %}
+
+<!-- Crispy Form Tag -->
+
+<!-- Navbar -->
+{% block nav-content %}
+<!-- <i class="fas fa-user-check"></i>&nbsp;&nbsp; Trade Register -->
+{% endblock nav-content %}
+
+<!-- Page Content -->
+{% block content %} 
+
+<div class="container mt-5" style="width: 450px;">
+    <div class="card p-3 border-dark">
+
+        {{ trade.ticker }}<br>
+        {{ trade.company_name }}<br>
+        {{ trade.share_currency }}<br>
+        {{ trade.quantity }}<br>
+        {{ trade.purchase_date }}<br>
+        {{ trade.initial_share_price }}<br>
+        
+        
+    </div>
+</div>
+
+{% endblock content %}

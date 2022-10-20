@@ -1,15 +1,24 @@
-{% extends 'base.html' %}
+{% extends 'trades/base.html' %}
 
+{% block nav-content %}
+Add a New Trade
+{% endblock nav-content %}
+
+<!-- Crispy Form Tag -->
+{% load crispy_forms_tags %}
+
+
+<!-- Page Content -->
 {% block content %} 
 
 <div class="container mt-5" style="width: 450px;">
     <div class="card p-3 border-dark">
         <form method="POST" autocomplete="off">
             {% csrf_token %}
-            {{ form.as_p }}
+            {{ form|crispy }}
             <br><hr>
             <div class="d-grid gap-2 mb-3">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary">Add/Change</button>
               <a href="{% url 'viewtrades' %}" class="btn btn-secondary">Cancel</a>
             </div>
             <hr>

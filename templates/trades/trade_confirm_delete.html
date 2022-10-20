@@ -1,18 +1,36 @@
-{% extends 'base.html' %}
+{% extends 'trades/base.html' %}
 
+<!-- Navbar Content -->
+{% block nav-content %}
+<!-- <i class="fas fa-user-times"></i>&nbsp;&nbsp; Delete this trade -->
+<!-- <i class="fas fa-business-time"></i> -->
+{% endblock nav-content %}
+
+<!-- Block Footer -->
+{% block footer %} style="color: #ff7f7f;" {% endblock footer %}
+
+<!-- Page Content -->
 {% block content %}
 <br>
-        <h6>Deleting a Trade</h6>
+<div class="container mt-5 mb-2" style="width: 450px;">
+    <div class="card p3 border-dark">
+        <h6 class="modal-title">
+            &nbspDeleting a Trade
+        </h6>
         <hr>
-            <p>Confirm Delete?</p>
-            <div><strong>{{ trade.quantity }} shares of {{ trade.ticker }} - {{ trade.company_name }}</strong></div>
+        <div class="text-center text-dark"><i class="far fa-trash-alt fa-5x mb-4 mt-2"></i></div>
+        <div class="text-center text-danger">
+            <span>Confirm Delete?</span>
+            <div class="text-dark mt-3 mb-2"><strong>{{ trade.quantity }} shares of {{ trade.ticker }} - {{ trade.company_name }}</strong></div>
+        </div>
         <hr>
         <form method="POST">
             {% csrf_token %}
-            <input type="submit" value="Delete">
-            <a href="{% url 'viewtrades' %}">Cancel</a>
+            <input type="submit" class="btn btn-outline-danger btn-sm mx-2 mb-2" value="Delete" style="float: right;">
+            <a href="{% url 'viewtrades' %}" class="btn btn-secondary btn-sm mb-2" style="float: right;">Cancel</a>
         </form>
+    </div>
     <br><hr><br>
-    <span>If you proceed, this trade will be permenantly deleted.</span>
+    <span class="text-center mx-auto">If you proceed, this trade will be permenantly deleted.</span>
 </div>
 {% endblock content %}

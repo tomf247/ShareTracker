@@ -1,6 +1,6 @@
 from trades.models import Trade
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 from trades.forms import TradeForm
 from django.http import HttpResponseRedirect, Http404
 from django.urls import reverse_lazy
@@ -90,4 +90,12 @@ class DeleteTrade(DeleteView):
         messages.success(self.request, 'Trade deleted successfully.')
 
         return super(DeleteTrade, self).delete(request, *args, **kwargs)
+
+class TradeDetail(DetailView):
+    model = Trade
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        #context = 'trade_list'
+        return context
     

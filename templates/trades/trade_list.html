@@ -1,45 +1,81 @@
-{% extends 'base.html' %}
+{% extends 'trades/base.html' %}
+{% load humanize %}
 
 {% block content %}
-<a href="{% url 'createtrade' %}" class="btn btn-outline-primary mb-3 mt-5">
-    <i class="fas fa-plus"></i>Add Trade
-</a>
-<p>Portfolio Initial Value:  {{ opening_balance.initial_share_value__sum }} </p>
 
-<table>
-    <thead>
-        <tr>
-            <th>Ticker</th>
-            <th>Company</th>
-            <th>Currency</th>
-            <th>Qty</th>
-            <th>Date</th>
-            <th>Orig Price</th>
-            <th>Orig Value</th>
-            <th>New Price</th>
-            <th>New Value</th>
-            <th>Gain / Loss</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
+<div class="container"> 
+  <a href="{% url 'createtrade' %}" class="btn btn-success mb-3 mt-5">
+          <i class="fas fa-plus"></i>&nbsp;&nbsp; Add Trade
+      </a>
+    <div class="col">
+      <table class="table bg-white rounded shadow-sm  table-hover">
+        <thead>
+            <tr>
+                <th scope="col" class="d-none d-lg-table-cell">Ticker</th>
+                <th scope="col">Company</th>
+                <th scope="col" class="d-none d-md-table-cell">Qty</th>
+                <th scope="row" class="d-none d-lg-table-cell">Date</th>
+                <th scope="row" class="d-none d-lg-table-cell">Orig Price</th>
+                <th scope="row" class="d-none d-lg-table-cell">Orig Value</th>
+                <th scope="col" class="d-none d-md-table-cell">Market Price</th>
+                <th scope="col" class="d-none d-md-table-cell">Market Value</th>
+                <th scope="col">Gain / Loss</th>
+                <th scope="col" colspan="3">Actions</th>
+            </tr>
+        </thead>
 
-    <tbody>
+        <tbody>
         {% for trade in object_list %}
-        <tr>
-            <td>{{ trade.ticker }}</td>
-            <td>{{ trade.company_name }}</td>
-            <td>{{ trade.share_currency }}</td>
-            <td>{{ trade.quantity }}</td>
-            <td>{{ trade.purchase_date }}</td>
-            <td>{{ trade.initial_share_price }}</td>
-            <td>{{ trade.initial_share_value }}</td>
-            <td>{{ trade.latest_share_price }}</td>
-            <td>{{ trade.latest_share_value|floatformat:"2" }}</td>
-            <td>{{ trade.latest_gain_loss|floatformat:"2" }} </td>
-            <td><a href="{% url 'updatetrade' pk=trade.id %}"> Update</a></td>
-            <td><a href="{% url 'deletetrade' pk=trade.id %}"> Delete</a></td>
-        </tr>
+          <tr>
+              <td scope="col" class="d-none d-lg-table-cell">{{ trade.ticker }}</td>
+              <td scope="row">{{ trade.company_name }}</td>
+              <!-- <td>{{ trade.share_currency }}</td> -->
+              <td scope="row" class="d-none d-md-table-cell">{{ trade.quantity }}</td>
+              <td scope="row" class="d-none d-lg-table-cell">{{ trade.purchase_date }}</td>
+              <td scope="row" class="d-none d-lg-table-cell">{{ trade.initial_share_price }}</td>
+              <td scope="row" class="d-none d-lg-table-cell">{{ trade.initial_share_value|floatformat:"2"|intcomma }}</td>
+              <td scope="row" class="d-none d-md-table-cell">{{ trade.latest_share_price|floatformat:"4"|intcomma }}</td>
+              <td scope="row" class="d-none d-md-table-cell">{{ trade.latest_share_value|floatformat:"2"|intcomma }}</td>
+              
+              {% if trade.latest_gain_loss < 0 %}
+                  <td scope="row" class ="loss"> {{ trade.latest_gain_loss|floatformat:"2"|intcomma }} </td>
+                  {% else %} 
+                  <td scope="row" class="gain"> {{ trade.latest_gain_loss|floatformat:"2"|intcomma }} </td>
+              {% endif %}
+
+              <td scope="row">
+                  <a href="{% url 'tradedetail' pk=trade.id %}" class="btn btn-primary btn-sm">
+                  <i class="fas fa-info"></i>
+                  </a>
+              </td>
+              <td scope="row">
+                  <a href="{% url 'updatetrade' pk=trade.id %}" class="btn btn-success btn-sm">
+                  <i class="fas fa-edit"></i>
+                  </a>
+              </td>
+              <td scope="row">
+                  <a href="{% url 'deletetrade' pk=trade.id %}" class="btn btn-danger btn-sm">
+                  <i class="fas fa-trash-alt"></i>
+                  </a>
+              </td>
+          </tr>
         {% endfor %}
-    </tbody>
-</table>
+        </tbody>
+      </table>
+    </div>
+</div>
+        {% if is_paginated %}
+        <nav aria-label="Page navigation conatiner"></nav>
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                <li><a href="?page={{ page_obj.previous_page_number }}" class="page-link">&laquo; PREV </a></li>
+                {% endif %}
+                {% if page_obj.has_next %}
+                <li><a href="?page={{ page_obj.next_page_number }}" class="page-link"> NEXT &raquo;</a></li>
+
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+    {% endif %}
 {% endblock content %}
