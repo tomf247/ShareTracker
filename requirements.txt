@@ -31,4 +31,5 @@ sqlparse==0.4.2
 tqdm==4.64.1
 w3lib==2.0.1
 websockets==10.3
+whitenoise==6.2.0
 yahoo-fin==0.8.9.1
