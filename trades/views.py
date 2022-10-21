@@ -17,16 +17,18 @@ class ViewTrades (LoginRequiredMixin, ListView):
     paginate_by = 6
 
     def get_queryset(self):
+        ''' Selct only trades in database that are in the user's portfolio. '''
 
         return Trade.objects.filter(user=self.request.user)
 
     def get_context_data(self, *args, **kwargs):
+        ''' Override to get a running total of the initial balance '''
 
         context = super(ViewTrades, self).get_context_data(*args, **kwargs)
         context['opening_balance'] = Trade.objects.filter(user=self.request.user).aggregate(Sum('initial_share_value'))
         return context
 
-class CreateTrade(CreateView):
+class CreateTrade(LoginRequiredMixin, CreateView):
     ''' Record a new trade. '''
 
     model = Trade
@@ -46,7 +48,7 @@ class CreateTrade(CreateView):
         messages.success(self.request, 'Trade created successfully.')
         return reverse_lazy('viewtrades')
 
-class UpdateTrade(UpdateView):
+class UpdateTrade(LoginRequiredMixin, UpdateView):
     ''' Make changes to a previously inserted trade. '''
 
     model = Trade
@@ -73,7 +75,7 @@ class UpdateTrade(UpdateView):
         messages.success(self.request, 'Trade updated successfully.')
         return reverse_lazy('viewtrades')
 
-class DeleteTrade(DeleteView):
+class DeleteTrade(LoginRequiredMixin, DeleteView):
     ''' Remove a trade from user's portfolio. '''
     model = Trade
     success_url = reverse_lazy('viewtrades')
@@ -88,14 +90,14 @@ class DeleteTrade(DeleteView):
     def delete(self, request, *args, **kwargs):
         ''' Override to raise notification of successful delete. '''
         messages.success(self.request, 'Trade deleted successfully.')
-
         return super(DeleteTrade, self).delete(request, *args, **kwargs)
 
 class TradeDetail(DetailView):
+    ''' Display additional details for a single trade. '''
     model = Trade
     
     def get_context_data(self, **kwargs):
+        ''' Obtain a context to return to user. '''
         context = super().get_context_data(**kwargs)
-        #context = 'trade_list'
         return context
     

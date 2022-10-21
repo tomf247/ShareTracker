@@ -6,6 +6,7 @@ from decimal import Decimal
 from django.db.models import Sum, F
 
 class Trade(models.Model):
+    ''' Required fields to record the trade and derive calculations for display. '''
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     ticker = models.CharField(max_length=10)
     company_name = models.CharField(max_length=50,null=True)
@@ -15,6 +16,7 @@ class Trade(models.Model):
     initial_share_price = models.DecimalField(null=False,max_digits=15,decimal_places=5)
     initial_share_value = models.DecimalField(null=False,max_digits=15,decimal_places=2)
     class Meta:
+        ''' Sort by ticker symbol. '''
         ordering = ['ticker']
 
     def __str__(self):
@@ -27,17 +29,17 @@ class Trade(models.Model):
 
         handle = si.get_quote_data(str(self.ticker))
         latest_share_price = handle.get('regularMarketPrice')
-        #Trade.save(self)
         return latest_share_price
 
     @property
     def latest_share_value(self):
+        ''' The market price multiplied by number of shares to show latest value.'''
         latest_share_value = Decimal(self.latest_share_price) * self.quantity
-        #self.save()
         return self.latest_share_price * self.quantity
 
     @property
     def latest_gain_loss(self):
+        ''' The market value minus the initial value gives us a profit or loss.'''
         return Decimal(self.latest_share_value) - self.initial_share_value
 
     def save(self, *args, **kwargs):

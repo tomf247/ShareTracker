@@ -19,6 +19,7 @@ class TradeForm(forms.ModelForm):
 
 
     def clean_ticker(self):
+        ''' Validate that ticker (symbol) submitted is known on the Stock Exchange.'''
 
         ticker = self.cleaned_data.get('ticker')
         try:
@@ -30,6 +31,7 @@ class TradeForm(forms.ModelForm):
     
 
     def clean_quantity(self):
+        ''' Check the number of shares input is valid. '''
         
         quantity = self.cleaned_data.get('quantity')
         if (quantity <= 0):
@@ -40,6 +42,7 @@ class TradeForm(forms.ModelForm):
 
 
     def clean_initial_share_price(self):
+        ''' Check the price field of shares input is valid. '''
         
         initial_share_price = self.cleaned_data.get('initial_share_price')
         if (initial_share_price <= 0):
