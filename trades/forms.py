@@ -12,7 +12,7 @@ class TradeForm(forms.ModelForm):
     ''' Add a new Trade and check input is valid '''
     class Meta:
         model = Trade
-        fields = ('ticker','quantity', 'purchase_date', 'initial_share_price')
+        fields = ['ticker','quantity', 'purchase_date', 'initial_share_price']
         widgets = {
         'purchase_date': DateInput()
         }
@@ -25,7 +25,7 @@ class TradeForm(forms.ModelForm):
         try:
             handle = si.get_quote_data(ticker)
         except:
-            raise forms.ValidationError('Invalid Ticker Symbol')
+            raise forms.ValidationError('Invalid Ticker Symbol.')
         
         return ticker
     
@@ -36,7 +36,7 @@ class TradeForm(forms.ModelForm):
         quantity = self.cleaned_data.get('quantity')
         if (quantity <= 0):
 
-            raise forms.ValidationError('Quantity must be greater than 0')
+            raise forms.ValidationError('Quantity must be greater than 0.')
         
         return quantity
 
@@ -47,6 +47,6 @@ class TradeForm(forms.ModelForm):
         initial_share_price = self.cleaned_data.get('initial_share_price')
         if (initial_share_price <= 0):
 
-            raise forms.ValidationError('The share price must be greater than 0')
+            raise forms.ValidationError('The share price must be greater than 0.')
         
         return initial_share_price
