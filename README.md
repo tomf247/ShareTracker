@@ -133,8 +133,8 @@ This app was deployed to Heroku. There are several key steps to be aware of when
 - Add the whitenoise module to get static files to be served
 - Make sure Procfile is in the root, not the App or Project folder
 - Pay attention to module versioning.
-- Set the Heroku flag COLLECT_STATIC_
-FILES to False.
+- Set the Heroku flag COLLECT_STATIC_FILES to False.
+- Run *python3 manage.py collectstatic* from the terminal.
 
 ### Steps for deployment
 
