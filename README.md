@@ -2,7 +2,7 @@
 
 ![alt text](static/docs/share_tracker_login.png "ShareTracker Logo")
 
-ShareTracker is an application written using the Python Django Framework, which maintains a registry stocks and shares you own. It retrieves the market price of these shares, allowing you see their current market value. It shows a gain or loss value for each investment.
+ShareTracker is an application written using the Python Django Framework, which maintains a registry of stocks and shares you own. It retrieves the market price of these shares, allowing you see their current market value. It shows a gain or loss value for each investment.
 
 [Here is a link to the application](https://tf-sharetracker.herokuapp.com/)
 
