@@ -1,22 +1,3 @@
-/* ------------------------------------------
-# START SETUP
------------------------------------------- */
-
-/* html, 
-body {
-    height: 100%;
-    margin: 0;
-    max-width: 100%;
-    overflow: hidden;
-} */
-/* ------------------------------------------
-# FOOTER
------------------------------------------- */
-/* .wrapperold {
-    min-height: 100%;
-    margin-bottom: -50px;
-}  */
-
 .loss {
   color: #FF0000;
 }
@@ -25,16 +6,12 @@ body {
   color: #096b09;
 }
 
-/* #footer,
-.push {
-  height: 50px;
-} */
 
 :root {
 --main-bg-color: #7dbbee;
---main-text-color: #c1efde;
+--main-text-color: #096b09;
 --second-text-color: #bbbec5;
---second-bg-color: #93defc;
+--second-bg-color: #f9fbfc;
 }
 
 .primary-text {
