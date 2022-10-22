@@ -64,7 +64,6 @@ class TestForms(TestCase):
         self.assertIn('initial_share_price', form.errors.keys())
         self.assertEqual(form.errors['initial_share_price'][0], 'The share price must be greater than 0.')
 
-
     def test_fields_are_explicit_in_form_metaclass(self):
         form = TradeForm()
-        self.assertEqual(form.Meta.fields, ['ticker','quantity', 'purchase_date', 'initial_share_price'])
+        self.assertEqual(form.Meta.fields, ['ticker', 'quantity', 'purchase_date', 'initial_share_price'])

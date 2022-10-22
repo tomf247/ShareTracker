@@ -28,6 +28,7 @@ class ViewTrades (LoginRequiredMixin, ListView):
         context['opening_balance'] = Trade.objects.filter(user=self.request.user).aggregate(Sum('initial_share_value'))
         return context
 
+
 class CreateTrade(LoginRequiredMixin, CreateView):
     ''' Record a new trade. '''
 
@@ -47,6 +48,7 @@ class CreateTrade(LoginRequiredMixin, CreateView):
 
         messages.success(self.request, 'Trade created successfully.')
         return reverse_lazy('viewtrades')
+
 
 class UpdateTrade(LoginRequiredMixin, UpdateView):
     ''' Make changes to a previously inserted trade. '''
@@ -75,6 +77,7 @@ class UpdateTrade(LoginRequiredMixin, UpdateView):
         messages.success(self.request, 'Trade updated successfully.')
         return reverse_lazy('viewtrades')
 
+
 class DeleteTrade(LoginRequiredMixin, DeleteView):
     ''' Remove a trade from user's portfolio. '''
     model = Trade
@@ -86,18 +89,18 @@ class DeleteTrade(LoginRequiredMixin, DeleteView):
         if self.object.user != request.user:
             raise Http404('You tried to delete a trade that is not in your portfolio.')
         return handler
-    
+
     def delete(self, request, *args, **kwargs):
         ''' Override to raise notification of successful delete. '''
         messages.success(self.request, 'Trade deleted successfully.')
         return super(DeleteTrade, self).delete(request, *args, **kwargs)
 
+
 class TradeDetail(DetailView):
     ''' Display additional details for a single trade. '''
     model = Trade
-    
+
     def get_context_data(self, **kwargs):
         ''' Obtain a context to return to user. '''
         context = super().get_context_data(**kwargs)
         return context
-    

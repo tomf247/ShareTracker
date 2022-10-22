@@ -121,6 +121,10 @@ Testing included the following steps:
 - Full validation of user input values.
 - Tested on multiple browsers and device types both locally and deployed version.
 
+## Linting
+
+As of this writing the website www.pep8online.com is not running. Therefore linting was performed in the VS Code (Gitpod) environment using the *pycodestyle* addon. It caught several errors in my code regarding spacing, commas, line-spacing etc. These were duly corrected and the application re-tested. The only remaining errors relate to **line too-long** warnings but they are Django functions and statements, and not Python statements written by myself..
+
 ## Bugs
 
 - No known bugs.
