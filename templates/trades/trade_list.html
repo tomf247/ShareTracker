@@ -20,6 +20,8 @@
                 <th scope="col" class="d-none d-md-table-cell">Market Price</th>
                 <th scope="col" class="d-none d-md-table-cell">Market Value</th>
                 <th scope="col">Gain / Loss</th>
+                <th scope="col">Price Change Today</th>
+                <th scope="col class="d-none d-md-table-cell">Change Today %</th>
                 <th scope="col" colspan="3">Actions</th>
             </tr>
         </thead>
@@ -37,12 +39,20 @@
               <td scope="row" class="d-none d-md-table-cell">{{ trade.latest_share_value|floatformat:"2"|intcomma }}</td>
               
               {% if trade.latest_gain_loss < 0 %}
-                  <td scope="row" class ="loss"> {{ trade.latest_gain_loss|floatformat:"2"|intcomma }} </td>
+                  <td scope="row" class="loss"> {{ trade.latest_gain_loss|floatformat:"2"|intcomma }}</td>
                   {% else %} 
-                  <td scope="row" class="gain"> {{ trade.latest_gain_loss|floatformat:"2"|intcomma }} </td>
+                  <td scope="row" class="gain"> {{ trade.latest_gain_loss|floatformat:"2"|intcomma }}</td>
               {% endif %}
-
-              <td scope="row">
+              
+              {% if trade.market_change < 0 %}
+                  <td scope="row" class="loss d-none d-md-table-cell">{{ trade.market_change|floatformat:"2"|intcomma }}</td>
+                  <td scope="row" class="loss">{{ trade.market_change_percent|floatformat:"2"|intcomma }}%</td>
+                  {% else %} 
+                  <td scope="row" class="gain d-none d-md-table-cell">{{ trade.market_change|floatformat:"2"|intcomma }}</td>
+                  <td scope="row" class="gain">{{ trade.market_change_percent|floatformat:"2"|intcomma }}%</td>
+               {% endif %}
+              
+               <td scope="row">
                   <a href="{% url 'tradedetail' pk=trade.id %}" class="btn btn-primary btn-sm">
                   <i class="fas fa-info"></i>
                   </a>
