@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 import datetime
 from yahoo_fin import stock_info as si
-from decimal import Decimal                                                                               
+from decimal import Decimal
 
 
 class Trade(models.Model):
@@ -25,9 +25,6 @@ class Trade(models.Model):
 
         return self.ticker
 
-    def handle(parm):
-        return si.get_quote_data(str(self.ticker))
-
     @property
     def latest_share_price(self):
         ''' API call to Yahoo Finance for latest price. '''
@@ -48,6 +45,12 @@ class Trade(models.Model):
         ''' The market value minus the initial
             value gives us a profit or loss.'''
         return Decimal(self.latest_share_value) - self.initial_share_value
+
+    @property
+    def latest_gain_loss_percent(self):
+        ''' The latest gain/loss expressed as a
+            percentage of the initial value.'''
+        return (self.latest_gain_loss / self.initial_share_value) * 100
 
     @property
     def market_change(self):
