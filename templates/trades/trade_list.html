@@ -14,15 +14,15 @@
                 <th scope="col" class="d-none d-lg-table-cell">Ticker</th>
                 <th scope="col">Company</th>
                 <th scope="col" class="d-none d-md-table-cell">Qty</th>
-                <th scope="row" class="d-none d-lg-table-cell">Date</th>
-                <th scope="row" class="d-none d-lg-table-cell">Orig Price</th>
-                <th scope="row" class="d-none d-lg-table-cell">Orig Value</th>
+                <!-- <th scope="col" class="d-none d-lg-table-cell">Date</th> -->
+                <th scope="col" class="d-none d-lg-table-cell">Orig Price</th>
+                <th scope="col" class="d-none d-lg-table-cell">Orig Value</th>
                 <th scope="col" class="d-none d-md-table-cell">Market Price</th>
                 <th scope="col" class="d-none d-md-table-cell">Market Value</th>
-                <th scope="col">Gain / Loss</th>
-                <th scope="col">Price Change Today</th>
-                <th scope="col class="d-none d-md-table-cell">Change Today %</th>
-                <th scope="col" class="d-none d-md-table-cell">Overall %</th>
+                <th scope="col" class="d-none d-md-none d-lg-table-cell">Change Today</th>
+                <th scope="col" class="d-none d-md-table-cell">Change Today %</th>
+                <th scope="col">Overall Gain/Loss</th>
+                <th scope="col" class="d-none d-lg-table-cell">Overall %</th>
                 <th scope="col" colspan="3">Actions</th>
             </tr>
         </thead>
@@ -33,29 +33,36 @@
               <td scope="row" class="d-none d-lg-table-cell">{{ trade.ticker }}</td>
               <td scope="row">{{ trade.company_name }}</td>
               <td scope="row" class="d-none d-md-table-cell">{{ trade.quantity }}</td>
-              <td scope="row" class="d-none d-lg-table-cell">{{ trade.purchase_date }}</td>
+              <!-- <td scope="row" class="d-none d-lg-table-cell">{{ trade.purchase_date }}</td> -->
               <td scope="row" class="d-none d-lg-table-cell">{{ trade.initial_share_price|floatformat:"2"|intcomma }}</td>
               <td scope="row" class="d-none d-lg-table-cell">{{ trade.initial_share_value|floatformat:"2"|intcomma }}</td>
-              <td scope="row" class="d-none d-md-table-cell">{{ trade.latest_share_price|floatformat:"2"|intcomma }}</td>
+              {% if trade.market_change < 0 %}
+                <td scope="row" class="d-none d-md-table-cell text-danger"><i class="text-danger fas fa-arrow-down"></i>{{ trade.latest_share_price|floatformat:"2"|intcomma }}</td>
+                {% elif trade.market_change == 0 %}
+                <td scope="row" class="d-none d-md-table-cell text-primary">--{{ trade.latest_share_price|floatformat:"2"|intcomma }}</td>
+                {% else %}
+                <td scope="row" class="d-none d-md-table-cell text-success"><i class="text-success fas fa-arrow-up"></i>{{ trade.latest_share_price|floatformat:"2"|intcomma }}</td>
+              {% endif %}
               <td scope="row" class="d-none d-md-table-cell">{{ trade.latest_share_value|floatformat:"2"|intcomma }}</td>
               
-              {% if trade.latest_gain_loss < 0 %}
-                  <td scope="row" class="loss"> {{ trade.latest_gain_loss|floatformat:"2"|intcomma }}</td>
-                  {% else %} 
-                  <td scope="row" class="gain"> {{ trade.latest_gain_loss|floatformat:"2"|intcomma }}</td>
-              {% endif %}
-              
               {% if trade.market_change < 0 %}
-                  <td scope="row" class="loss d-none d-md-table-cell">{{ trade.market_change|floatformat:"2"|intcomma }}</td>
-                  <td scope="row" class="loss">{{ trade.market_change_percent|floatformat:"2"|intcomma }}%</td>
+                  <td scope="row" class="d-none d-md-none d-lg-table-cell text-danger"><i class="text-danger fas fa-arrow-down"></i>{{ trade.market_change|floatformat:"2"|intcomma }}</td>
+                  <td scope="row"><i class="text-danger fas fa-arrow-down"></i>{{ trade.market_change_percent|floatformat:"2"|intcomma }}%</td>
                   {% else %} 
-                  <td scope="row" class="gain d-none d-md-table-cell">{{ trade.market_change|floatformat:"2"|intcomma }}</td>
-                  <td scope="row" class="gain">{{ trade.market_change_percent|floatformat:"2"|intcomma }}%</td>
+                  <td scope="row" class="text-success d-none d-lg-table-cell"><i class="text-success fas fa-arrow-up"></i>{{ trade.market_change|floatformat:"2"|intcomma }}</td>
+                  <td scope="row" class="text-success"><i class="text-success fas fa-arrow-up"></i>{{ trade.market_change_percent|floatformat:"2"|intcomma }}%</td>
                {% endif %}
-               {% if trade.latest_gain_loss_percent < 0 %}
-                  <td scope="row" class="loss">{{ trade.latest_gain_loss_percent|floatformat:"2"|intcomma }}%</td>
+
+               {% if trade.latest_gain_loss < 0 %}
+                  <td scope="row" class="text-danger">{{ trade.latest_gain_loss|floatformat:"2"|intcomma }}</td>
                   {% else %} 
-                  <td scope="row" class="gain">{{ trade.latest_gain_loss_percent|floatformat:"2"|intcomma }}%</td>
+                  <td scope="row" class="text-success">{{ trade.latest_gain_loss|floatformat:"2"|intcomma }}</td>
+               {% endif %}
+
+               {% if trade.latest_gain_loss_percent < 0 %}
+                  <td class="text-danger d-none d-md-table-cell">{{ trade.latest_gain_loss_percent|floatformat:"2"|intcomma }}%</td>
+                  {% else %} 
+                  <td class="text-success d-none d-md-table-cell">{{ trade.latest_gain_loss_percent|floatformat:"2"|intcomma }}%</td>
                {% endif %}
               
                <td scope="row">

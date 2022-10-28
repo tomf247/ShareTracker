@@ -21,9 +21,9 @@
                   <tr>
                     <td>Gain / Loss:</td>
                     {% if trade.latest_gain_loss < 0 %}
-                        <td class="loss"> {{ trade.latest_gain_loss|floatformat:"2"|intcomma }} </td>
+                        <td class="text-danger"> {{ trade.latest_gain_loss|floatformat:"2"|intcomma }} </td>
                         {% else %} 
-                        <td scope="row" class="gain"> {{ trade.latest_gain_loss|floatformat:"2"|intcomma }} </td>
+                        <td class="text-success"> {{ trade.latest_gain_loss|floatformat:"2"|intcomma }} </td>
                     {% endif %}
                   </tr>
     
