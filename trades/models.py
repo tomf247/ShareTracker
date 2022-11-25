@@ -62,6 +62,16 @@ class Trade(models.Model):
         handle = si.get_quote_data(str(self.ticker))
         return handle.get('regularMarketChangePercent')
 
+    @property
+    def bid_price(self):
+        handle = si.get_quote_data(str(self.ticker))
+        return handle.get('bid')
+
+    @property
+    def ask_price(self):
+        handle = si.get_quote_data(str(self.ticker))
+        return handle.get('ask')
+
     def save(self, *args, **kwargs):
         ''' Override default Save method to populate calculated fields. '''
 

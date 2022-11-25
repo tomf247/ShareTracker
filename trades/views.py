@@ -26,6 +26,8 @@ class ViewTrades (LoginRequiredMixin, ListView):
 
         context = super(ViewTrades, self).get_context_data(*args, **kwargs)
         context['opening_balance'] = Trade.objects.filter(user=self.request.user).aggregate(Sum('initial_share_value'))
+        context['latest_value'] = 1000
+
         return context
 
 

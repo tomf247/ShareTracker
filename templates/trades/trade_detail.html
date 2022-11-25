@@ -16,6 +16,7 @@
                 <tr><td>Market Price:</td><td>{{ trade.latest_share_price|floatformat:"2"|intcomma }}</td></tr>
                 <tr><td>Original Value:</td><td>{{ trade.initial_share_value|floatformat:"2"|intcomma }}</td></tr>
                 <tr><td>Market Value:</td><td>{{ trade.latest_share_value|floatformat:"2"|intcomma }}</td></tr>
+                <tr><td>Bid/Ask Price:</td><td>{{ trade.bid_price|floatformat:"4"|intcomma }} / {{ trade.ask_price|floatformat:"4"|intcomma }}</td></tr>
 
                   
                   <tr>

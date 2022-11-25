@@ -1,11 +1,11 @@
 from pathlib import Path
 import os
 import dj_database_url
+import sys
+
 
 if os.path.isfile('env.py'):
-   import env
-
-
+    import env
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -19,9 +19,9 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['tf-sharetracker.herokuapp.com', 'localhost',]
+ALLOWED_HOSTS = ['tf-sharetracker.herokuapp.com', 'localhost', ]
 
 CSRF_TRUSTED_ORIGINS = ['localhost']
 
@@ -96,8 +96,8 @@ DATABASES = {
    'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
 }
 
-import sys
-if 'test' in sys.argv or 'test_coverage' in sys.argv: #Covers regular testing and django-coverage
+
+if 'test' in sys.argv or 'test_coverage' in sys.argv: 
     DATABASES['default']['ENGINE'] = 'django.db.backends.sqlite3'
 
 
@@ -144,5 +144,3 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
-
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
